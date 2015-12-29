@@ -1,0 +1,26 @@
+group 'com.cnc'
+version '1.0-SNAPSHOT'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.5
+
+    repositories {
+        //mavenCentral()
+
+    //    使用开源中国的maven仓库
+        maven { url 'http://maven.oschina.net/content/groups/public/' }
+
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+    }
+
+    // 显示当前项目下所有用于 compile 的 jar.
+    task listJars(description: 'Display all compile jars.') << {
+        configurations.compile.each { File file -> println file.name }
+    }
+}
