@@ -1,5 +1,7 @@
 package com.cnc.controller;
 
+import com.cnc.exception.BadRequestException;
+import com.cnc.exception.NotFoundException;
 import com.cnc.model.entity.User;
 import com.cnc.service.UserService;
 import org.slf4j.Logger;
@@ -39,7 +41,7 @@ public class UserController {
      */
     @RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public User getByName(@PathVariable String name){
+    public User getUser(@PathVariable String name) throws NotFoundException{
 
         return userService.getUser(name);
     }
@@ -51,7 +53,7 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public String addUser(@RequestBody String json){
+    public String addUser(@RequestBody String json) throws BadRequestException{
         userService.addUser(json);
         return json;
     }
@@ -63,7 +65,7 @@ public class UserController {
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public void login(@RequestBody String json,HttpSession httpSession){
+    public void login(@RequestBody String json,HttpSession httpSession) throws BadRequestException{
         User user = userService.login(json);
         httpSession.setAttribute("id",user.getId());
     }
@@ -74,7 +76,7 @@ public class UserController {
      */
     @RequestMapping(value = "/login",method = RequestMethod.DELETE)
     @ResponseBody
-    public void logout(HttpSession httpSession){
+    public void logout(HttpSession httpSession) throws BadRequestException{
         httpSession.invalidate();
     }
 }
