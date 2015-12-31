@@ -42,7 +42,7 @@ public class SessionFilter extends OncePerRequestFilter {
     private boolean isPass(HttpServletRequest httpRequest){
         String uri = httpRequest.getRequestURI();
         logger.debug(uri);
-        if (uri.endsWith("authorization")) {
+        if (uri.endsWith("login")) {
             return true;
         }
         if (uri.endsWith("users")){
